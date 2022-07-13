@@ -1,10 +1,11 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+  // mode deprecated: please use `ssr: false` instead of `mode: spa`
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'posts-front',
+    title: 'Тестовое задание',
     htmlAttrs: {
       lang: 'en'
     },
@@ -37,7 +38,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
-    'bootstrap-vue/nuxt',
+    '@nuxtjs/axios',
+    'bootstrap-vue/nuxt'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
