@@ -1,22 +1,33 @@
 <template>
-  <div class="container">
-    <p class="h3">Пост {{ $route.params.id }}</p>
-    <p>Title: {{}}</p>
-    <p>Body: {{}}</p>
+  <div class="container card">
+    <div class="card-body">
+      <h5 class="card-title">{{ post.data.title }}</h5>
+      <p class="card-text">
+        {{ post.data.body }}
+      </p>
+      <div class="btn btn-light">
+        <nuxt-link to="/posts/">Назад</nuxt-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import NavBar from "../../components/NavBar.vue";
+const postEndpoint = "https://jsonplaceholder.typicode.com/posts";
 
 export default {
   name: "SinglePostPage",
-  components: { NavBar },
+  data: () => {
+    return {
+      post: {},
+    };
+  },
   validate({ params }) {
     return /^\d+$/.test(params.id);
   },
-  mounted(){
-    console.log(this.$route.params)
-  }
+  async asyncData({ $axios, params }) {
+    const post = await $axios.get(postEndpoint + "/" + params.id);
+    return { post };
+  },
 };
 </script>
