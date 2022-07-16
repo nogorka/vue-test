@@ -1,9 +1,9 @@
 <template>
   <div class="container card">
     <div class="card-body">
-      <h5 class="card-title">{{ post.data.title }}</h5>
+      <h5 class="card-title">{{ post.title }}</h5>
       <p class="card-text">
-        {{ post.data.body }}
+        {{ post.body }}
       </p>
       <div class="btn btn-light">
         <nuxt-link to="/posts/">Назад</nuxt-link>
@@ -13,21 +13,19 @@
 </template>
 
 <script>
-const postEndpoint = "https://jsonplaceholder.typicode.com/posts";
-
 export default {
   name: "SinglePostPage",
-  data: () => {
-    return {
-      post: {},
-    };
-  },
+  middleware: ["auth"],
+
   validate({ params }) {
     return /^\d+$/.test(params.id);
   },
-  async asyncData({ $axios, params }) {
-    const post = await $axios.get(postEndpoint + "/" + params.id);
-    return { post };
+
+  computed: {
+    post() {
+      const postID = this.$route.params.id - 1;
+      return this.$store.getters["posts/postById"](postID);
+    },
   },
 };
 </script>

@@ -9,10 +9,30 @@
           <nuxt-link class="nav-link" to="/posts">Посты</nuxt-link>
         </li>
       </ul>
-      <span>Войти</span>
+
+      <div>
+        <span v-if="!hasCredentials">Войдите в систему</span>
+        <a v-else href="#" @click.prevent="logout"> {{ username }} || Выйти </a>
+      </div>
     </div>
   </nav>
 </template>
+
 <script>
-export default {};
+export default {
+  computed: {
+    hasCredentials() {
+      return this.$store.getters.hasCredentials;
+    },
+    username() {
+      return this.$store.getters.getLogin;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/");
+    },
+  },
+};
 </script>
